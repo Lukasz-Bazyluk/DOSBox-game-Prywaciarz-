@@ -68,9 +68,9 @@ class App extends React.Component {
       ],
       money: 1000,
       reRender: false,
-      cities: ['Bangladesh', 'Bialystok', 'Tokio', 'Honolulu', 'Los Angeles', 'Stockholm'],
       sum: 0,
-
+      myCity: 'Drezno',
+      debt: -200000,
     }
   }
 
@@ -142,16 +142,31 @@ class App extends React.Component {
 
 
   changeCity = e => {
+    console.log(this.state.cities);
     const tempItems = this.state.items;
+
+    const  cities = ['Bangladesh', 'Bialystok', 'Tokio', 'Honolulu', 'Los Angeles', 'Stockholm', 'Gdynia', 'Poznan']
+    const randomCities = cities[Math.floor(Math.random()*cities.length)]
+
     tempItems.map(x => {
       x.price = Math.ceil(Math.random() * 1000);
       return x;
     });
     this.setState({
-      items: this.state.items
+      items: this.state.items,
+      myCity: [...randomCities]
     });
   };
 
+    debet20 = () => {
+      const tenper = this.state.money * 0.8;
+      
+    this.setState({
+      debt: this.state.debt + tenper,
+      money: tenper.toFixed(0),
+    })
+
+    }
 
   render() {
     return (
@@ -160,7 +175,8 @@ class App extends React.Component {
         <ul>
           <li> <h2>Saldo Konta: {this.state.money}</h2></li>
           <li><h2>Suma twoich wszystkich towarow: {this.state.sum}$</h2></li>
-          <li><button onClick={() => this.changeCity()}>Zmien miasto </button></li>
+          <li><button onClick={() => this.changeCity()}>Randomowe Miasto </button> Aktualnie jesteś w {this.state.myCity}</li>
+          <li><h2>Stan twojego dlugu: {this.state.debt}</h2>Splac <button onClick={e => this.debet20()}>20%</button><button onClick={e => this.debet()}>50%</button> <button onClick={e => this.debet()}>70%</button> twojego stanu konta</li>
         </ul>
         <Items
           reRender={this.state.reRender}
