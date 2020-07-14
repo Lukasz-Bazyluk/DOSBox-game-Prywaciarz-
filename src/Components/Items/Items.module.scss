@@ -1,7 +1,7 @@
 .wrapper {
-  
+
   width: 500px;
- 
+
 }
 
 
@@ -11,7 +11,7 @@
 
   display: flex;
   padding-left: 5px;
-  
+
   >div {
     flex: 1;
   }
@@ -19,9 +19,10 @@
 
 }
 
-.price__price{
+.price__price {
   color: yellow;
 }
+
 .span {
   color: #dddddd;
   display: flex;
@@ -73,6 +74,7 @@
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+
 .quntity {
   margin-left: px;
 }
