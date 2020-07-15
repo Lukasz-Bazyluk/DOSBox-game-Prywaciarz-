@@ -30,12 +30,12 @@ class Items extends React.Component {
                 </div>
                 <button
                   className={styles.btn}
-                  onClick={e => this.props.changeMoney(el.price, el.name)}
+                  onClick={e => this.props.changeAccountMoney(el.price, el.name)}
                 >
                   Kup
                 </button>
-                <div className={styles.quntity}>
-                  <span>Posiadana Ilosc: </span>{" "}
+                <div >
+                  <span className={styles.quntity}> Posiadana Ilosc: </span>{" "}
                   <span className={styles.quntity_price}>{el.quantity}</span>
                 </div>
                 <div>

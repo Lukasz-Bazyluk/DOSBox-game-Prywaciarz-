@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.module.scss";
+import styles from "./App.module.scss";
 
 import Items from "../../Components/Items/Items";
 // import Account from '../../Components/Account/Account'
@@ -12,124 +12,119 @@ class App extends React.Component {
       randomEvents: [
         {
           text: "Zaplaciles podatek od nieruchomosci",
-          val: Math.random() * 1500 + 300
+          val: Math.random() * 1500 + 300,
         },
         {
-          text: "Zaplaciles podatek od nieruchomosci 2",
-          val: Math.random() * 1500 + 300
+          text:
+            "Podczas podrózy zostales przewieziony do szpitala. Koszt pobytu -2000$",
+          val: Math.random() * 1500 + 300,
         },
         {
           text: "Zaplaciles podatek od nieruchomosci 3",
-          val: Math.random() * 1500 + 300
+          val: Math.random() * 1500 + 300,
         },
         {
           text: "Zaplaciles podatek od nieruchomosci 4",
-          val: Math.random() * 1500 + 300
+          val: Math.random() * 1500 + 300,
         },
         {
           text: "Zaplaciles podatek od nieruchomosci 5",
-          val: Math.random() * 1500 + 300
+          val: Math.random() * 1500 + 300,
         },
         {
           text: "Zaplaciles podatek od nieruchomosci 6",
-          val: Math.random() * 1500 + 300
-        }
+          val: Math.random() * 1500 + 300,
+        },
       ],
       items: [
         {
           name: "Kawa",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Vodka",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Dom Publiczny",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Coca",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Bron",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Bitcoin",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Miedz",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Ropa",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Etherum",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
+          price: Math.ceil(Math.random() * 1000),
         },
         {
           name: "Samochod",
           quantity: 0,
-          price: Math.ceil(Math.random() * 1000)
-        }
+          price: Math.ceil(Math.random() * 1000),
+        },
       ],
-      money: 100000,
-      reRender: false,
-      sum: 0,
+      AccountMoney: 1000,
+      SumAcctualItems: 0,
       myCity: "Drezno",
-      debt: -200000
+      DebetAccount: -200000,
     };
   }
 
-  changeMoney = (val, n) => {
+  changeAccountMoney = (price, item) => {
     const temp = this.state.items;
-
-    temp.map(el => {
-      if (el.name === n) {
+    temp.map((el) => {
+      if (el.name === item) {
         el.quantity = el.quantity + 1;
       }
 
       return el;
     });
 
-    if (this.state.money - val > 0) {
+    if (this.state.AccountMoney - price > 0) {
       this.setState({
-        money: this.state.money - val,
+        AccountMoney: this.state.AccountMoney - price,
         items: [...temp],
-        sum: temp
-          .map(r => {
+        SumAcctualItems: temp
+          .map((r) => {
             return r.price * r.quantity;
           })
           .reduce((a, b) => {
             return a + b;
-          })
+          }),
       });
     } else {
       alert("Brakuje Ci pieniedzy :(, wez się do roboty :)!");
     }
   };
 
-  sellItems = (val, name) => {
-    // Czy sprawdzilem co tu sie dzieje ???
-    console.log(val);
-    console.log(name);
-    // ???
+  sellItems = (price, name) => {
     const temp = this.state.items;
-    temp.map(el => {
+    temp.map((el) => {
       if (el.name === name) {
         if (el.quantity !== 0) {
           el.quantity = el.quantity - 1;
@@ -144,34 +139,22 @@ class App extends React.Component {
     this.setState({
       items: [...temp],
 
-      money: this.state.money + val,
+      AccountMoney: this.state.AccountMoney + price,
 
       quantity: temp,
 
-      sum: temp
-        .map(r => {
+      SumAcctualItems: temp
+        .map((r) => {
           return r.price * r.quantity;
         })
         .reduce((a, b) => {
           return a + b;
-        })
+        }),
     });
-
-    
   };
 
-  changeCity = e => {
-    if (
-      Math.floor(Math.random() * 10) === 3 ||
-      Math.floor(Math.random() * 10) === 7
-    ) {
-      console.log(
-        this.state.randomEvents[
-          Math.floor(Math.random() * this.state.randomEvents.length)
-        ]
-      );
-    }
-    console.log(this.state.cities);
+  changeCity = (e) => {
+    
     const tempItems = this.state.items;
 
     const cities = [
@@ -182,85 +165,103 @@ class App extends React.Component {
       "Los Angeles",
       "Stockholm",
       "Gdynia",
-      "Poznan"
+      "Poznan",
     ];
     const randomCities = cities[Math.floor(Math.random() * cities.length)];
 
-    tempItems.map(item => {
+    tempItems.map((item) => {
       item.price = Math.ceil(Math.random() * 1000);
       return item;
     });
+
     this.setState({
       items: this.state.items,
       myCity: [...randomCities],
-      sum: this.state.items
-        .map(r => {
+      SumAcctualItems: this.state.items
+      
+        .map((r) => {
           return r.price * r.quantity;
         })
         .reduce((a, b) => {
           return a + b;
-        })
+          
+        }),
     });
   };
 
-  debet20 = () => {
-    let percent20 = this.state.money * 0.8;
+  DebetAccount20 = () => {
+    let percent20 = this.state.AccountMoney * 0.8;
 
     this.setState({
-      debt: parseInt(this.state.debt + percent20),
-      money: parseInt(percent20)
+      DebetAccount: parseInt(this.state.DebetAccount + percent20),
+      AccountMoney: parseInt(percent20),
     });
   };
-  debet50 = () => {
-    let percent50 = this.state.money * 0.5;
+  DebetAccount50 = () => {
+    let percent50 = this.state.AccountMoney * 0.5;
 
     this.setState({
-      debt: parseInt(this.state.debt + percent50),
-      money: parseInt(percent50)
+      DebetAccount: parseInt(this.state.DebetAccount + percent50),
+      AccountMoney: parseInt(percent50),
     });
   };
 
-  debet80 = () => {
-    let percent80 = this.state.money * 0.2;
+  DebetAccount80 = () => {
+    let percent80 = this.state.AccountMoney * 0.2;
 
     this.setState({
-      debt: parseInt(this.state.debt + percent80),
-      money: parseInt(percent80)
+      DebetAccount: parseInt(this.state.DebetAccount + percent80),
+      AccountMoney: parseInt(percent80),
     });
   };
 
   render() {
     return (
-      <>
-        <h1>Witaj w dos Box game</h1>
-        <ul>
-          <li>
+      <div className={styles.wrapper}>
+        <h1 className={styles.header__doss}>Biznes Dos Game Ramek</h1>
+        <div className={styles.wrapper__wrap}>
+          <span>
+            <h2>
+              Saldo Konta:{" "}
+              <span className={styles.colorTxt}>{this.state.AccountMoney}</span>
+              $
+            </h2>
+          </span>
+          <span>
             {" "}
-            <h2>Saldo Konta: {this.state.money}</h2>
-          </li>
-          <li>
-            <h2>Suma twoich wszystkich towarow: {this.state.sum}$</h2>
-          </li>
-          <li>
-            <button onClick={() => this.changeCity()}>Randomowe Miasto </button>{" "}
-            Aktualnie jesteś w {this.state.myCity}
-          </li>
-          <li>
-            <h2>Stan twojego dlugu: {this.state.debt}</h2>Splac
-            <button onClick={e => this.debet20()}>20%</button>
-            <button onClick={e => this.debet50()}>50%</button>
-            <button onClick={e => this.debet80()}>80%</button> twojego stanu
-            konta
-          </li>
-        </ul>
+            <h2>
+              Suma twoich zakupionych towarow:{" "}
+              <span className={styles.colorTxt}>
+                {this.state.SumAcctualItems}
+              </span>
+              $
+            </h2>
+          </span>
+        </div>
         <Items
-          reRender={this.state.reRender}
           items={this.state.items}
-          changeMoney={this.changeMoney}
+          changeAccountMoney={this.changeAccountMoney}
           sellItems={this.sellItems}
         />
-        {/* <Account money={this.state.money} /> */}
-      </>
+        <div className={styles.wrapper__buttons}>
+          <span>
+            <h2> Aktualnie jesteś w <span className={styles.colorTxt}>{this.state.myCity}</span></h2>
+            <button className={styles.btn} onClick={() => this.changeCity()}>
+              Randomowe Miasto{" "}
+            </button>{" "}
+          </span>
+
+          <div className={styles.wrapper__}>
+            <h2>Stan twojego dlugu: <span className={styles.colorTxt}>{this.state.DebetAccount}</span> $</h2><h2>Splac: <span>
+            <button className={styles.btn} onClick={(e) => this.DebetAccount20()}>20%</button>
+            <button className={styles.btn}onClick={(e) => this.DebetAccount50()}>50%</button>
+            <button className={styles.btn}onClick={(e) => this.DebetAccount80()}>80%</button></span></h2>
+            
+            
+             <h2>twojego stanu konta</h2>
+          </div>
+        </div>
+      </div>
     );
   }
 }

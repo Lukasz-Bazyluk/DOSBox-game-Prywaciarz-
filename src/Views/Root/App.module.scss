@@ -7,7 +7,146 @@
 }
 
 body {
+  // margin: 0;
+  // padding: 0;
+  // font-family: 'VT323', sans-serif;
+  // background: blue;
+  // color: white;
+
   margin: 0;
-  padding: 0;
   font-family: 'VT323', sans-serif;
+  font-weight: 400;
+  line-height: 14px;
+  font-size: 16px;
+  color: #bbbbbb;
+  text-align: left;
+  background-color: #000084;
+  -webkit-font-kerning: none;
+  font-kerning: none;
+  text-rendering: geometricPrecision;
+}
+
+.wrapper {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.header__doss {
+  display: table;
+  margin: 0 auto;
+  
+
+}
+
+.wrapper__wrap{
+  margin: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.colorTxt {
+  color: yellow;
+}
+
+.wrapper__buttons{
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+
+.btn {
+  display: inline-block;
+  font-size: 20px;
+  font-family: 'VT323';
+  line-height: 20px;
+  color: #000000;
+  text-align: center;
+  vertical-align: middle;
+  cursor: default;
+  background: #bbbbbb;
+  border: 0;
+  border-width: 0;
+  box-shadow: 0px 0px 0 5px #bbbbbb;
+  *zoom: 1;
+  box-shadow: 0 0 0 5px, 11px 13px 0 4px black;
+
+  
+
+}
+
+.btn:hover:before,
+.btn:hover:after {
+  color: yellow;
+}
+
+.btn:before {
+  content: "< ";
+}
+
+.btn:after {
+  content: " >";
+}
+
+.btn:hover {
+  color: #000;
+  text-decoration: none;
+  background: yellow;
+  outline: 0;
+}
+
+.btn:focus {
+  outline: thin solid #333;
+  outline: 5px auto ;
+  outline-offset: -2px;
+}
+
+.btn:hover,
+.btn:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background: #555555;
+  outline: 0;
+}
+
+.header__doss {
+  margin-top: 10px;
+  -webkit-animation: blinkingText 1.2s infinite;
+  animation: blinkingText 1.2s infinite;
+}
+
+@-webkit-keyframes blinkingText {
+  1% {
+    visibility: hidden;
+  }
+  49% {
+    visibility: hidden;
+  }
+  60% {
+    visibility: visible;
+  }
+  99% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+
+@keyframes blinkingText {
+  1% {
+    visibility: hidden;
+  }
+  49% {
+    visibility: hidden;
+  }
+  60% {
+    visibility: visible;
+  }
+  99% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
 }
