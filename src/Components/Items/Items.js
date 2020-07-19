@@ -54,7 +54,9 @@ class Items extends React.Component {
                 >
                   Sprzedaj
                 </button>
+              
               </div>
+              
             );
           })}
         </div>

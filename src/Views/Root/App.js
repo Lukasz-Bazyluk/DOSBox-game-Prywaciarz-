@@ -154,7 +154,18 @@ class App extends React.Component {
   };
 
   changeCity = (e) => {
-    
+    if (
+      Math.floor(Math.random() * 10) === 3 ||
+      Math.floor(Math.random() * 10) === 7
+    ) {
+      console.log(
+        this.state.randomEvents[
+          Math.floor(Math.random() * this.state.randomEvents.length)
+        ] - this.state.AccountMoney
+      );
+    }
+
+    console.log(this.state.randomEvents[0].text);
     const tempItems = this.state.items;
 
     const cities = [
@@ -178,14 +189,35 @@ class App extends React.Component {
       items: this.state.items,
       myCity: [...randomCities],
       SumAcctualItems: this.state.items
-      
+
         .map((r) => {
           return r.price * r.quantity;
         })
         .reduce((a, b) => {
           return a + b;
-          
         }),
+    });
+  };
+
+  sellAllItems = () => {
+    this.setState({
+      items: [...this.state.items],
+
+      AccountMoney:
+        this.state.AccountMoney +
+        this.state.items
+          .map((r) => {
+            return r.price * r.quantity;
+          })
+          .reduce((a, b) => {
+            return a + b;
+          }),
+
+      quantity: this.state.items.map((el) => {
+        return (el.quantity = 0);
+      }),
+
+      SumAcctualItems: 0,
     });
   };
 
@@ -218,7 +250,7 @@ class App extends React.Component {
   render() {
     return (
       <div className={styles.wrapper}>
-        <h1 className={styles.header__doss}>Biznes Dos Game Ramek</h1>
+        <h1 className={styles.header__doss}>Biznes Dos Game</h1>
         <div className={styles.wrapper__wrap}>
           <span>
             <h2>
@@ -242,23 +274,65 @@ class App extends React.Component {
           items={this.state.items}
           changeAccountMoney={this.changeAccountMoney}
           sellItems={this.sellItems}
+          sellAll={this.sellAll}
         />
         <div className={styles.wrapper__buttons}>
           <span>
-            <h2> Aktualnie jesteś w <span className={styles.colorTxt}>{this.state.myCity}</span></h2>
+            <h2>
+              {" "}
+              Aktualnie jesteś w{" "}
+              <span className={styles.colorTxt}>{this.state.myCity}</span>
+            </h2>
             <button className={styles.btn} onClick={() => this.changeCity()}>
               Randomowe Miasto{" "}
             </button>{" "}
+            <div>
+              {" "}
+              <button
+                className={styles.btn}
+                onClick={() =>
+                  this.sellAllItems(
+                    this.state.items.price,
+                    this.state.items.name
+                  )
+                }
+              >
+                Sprzedaj wszystko
+              </button>
+            </div>
           </span>
 
           <div className={styles.wrapper__}>
-            <h2>Stan twojego dlugu: <span className={styles.colorTxt}>{this.state.DebetAccount}</span> $</h2><h2>Splac: <span>
-            <button className={styles.btn} onClick={(e) => this.DebetAccount20()}>20%</button>
-            <button className={styles.btn}onClick={(e) => this.DebetAccount50()}>50%</button>
-            <button className={styles.btn}onClick={(e) => this.DebetAccount80()}>80%</button></span></h2>
-            
-            
-             <h2>twojego stanu konta</h2>
+            <h2>
+              Stan twojego dlugu:{" "}
+              <span className={styles.colorTxt}>{this.state.DebetAccount}</span>{" "}
+              $
+            </h2>
+            <h2>
+              Splac:{" "}
+              <span>
+                <button
+                  className={styles.btn}
+                  onClick={(e) => this.DebetAccount20()}
+                >
+                  20%
+                </button>
+                <button
+                  className={styles.btn}
+                  onClick={(e) => this.DebetAccount50()}
+                >
+                  50%
+                </button>
+                <button
+                  className={styles.btn}
+                  onClick={(e) => this.DebetAccount80()}
+                >
+                  80%
+                </button>
+              </span>
+            </h2>
+
+            <h2>twojego stanu konta</h2>
           </div>
         </div>
       </div>
