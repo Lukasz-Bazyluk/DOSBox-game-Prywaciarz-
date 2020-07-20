@@ -151,3 +151,26 @@ body {
     visibility: hidden;
   }
 }
+
+.footer {
+  margin: 0;
+  padding: 0;
+  background: #00aaaa;
+  height: 60px;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  line-height: 20px;
+  
+   p{
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     width: 100vw;
+     margin: 0 auto;
+     color: yellow;
+     padding: 10px;
+     font-size: 30px;
+   }
+}

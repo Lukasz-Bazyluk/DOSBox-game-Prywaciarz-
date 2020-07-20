@@ -12,28 +12,28 @@ class App extends React.Component {
       randomEvents: [
         {
           text: "Zaplaciles podatek od nieruchomosci",
-          val: Math.random() * 1500 + 300,
+          val: Math.random() * 100 + 300,
         },
         {
           text:
-            "Podczas podrózy zostales przewieziony do szpitala. Koszt pobytu -2000$",
-          val: Math.random() * 1500 + 300,
+            "Podczas podrózy zostales przewieziony do szpitala. Koszt pobytu ",
+          val: Math.random() * 100 + 300,
         },
         {
-          text: "Zaplaciles podatek od nieruchomosci 3",
-          val: Math.random() * 1500 + 300,
+          text: "Nie oplaciles podatku łobuzie ! ",
+          val: Math.random() * 100 + 300,
         },
         {
-          text: "Zaplaciles podatek od nieruchomosci 4",
-          val: Math.random() * 1500 + 300,
+          text: "Po drodze zatrzymales sie w motelu ",
+          val: Math.random() * 100 + 300,
         },
         {
-          text: "Zaplaciles podatek od nieruchomosci 5",
-          val: Math.random() * 1500 + 300,
+          text: "Z czterema promilami trafiłeś na izbę wytrzeźwień",
+          val: Math.random() * 100 + 300,
         },
         {
-          text: "Zaplaciles podatek od nieruchomosci 6",
-          val: Math.random() * 1500 + 300,
+          text: "Drogi ten 'lajfstajl wampira'",
+          val: Math.random() * 100 + 300,
         },
       ],
       items: [
@@ -92,6 +92,7 @@ class App extends React.Component {
       SumAcctualItems: 0,
       myCity: "Drezno",
       DebetAccount: -200000,
+      randomAction: false,
     };
   }
 
@@ -154,18 +155,6 @@ class App extends React.Component {
   };
 
   changeCity = (e) => {
-    if (
-      Math.floor(Math.random() * 10) === 3 ||
-      Math.floor(Math.random() * 10) === 7
-    ) {
-      console.log(
-        this.state.randomEvents[
-          Math.floor(Math.random() * this.state.randomEvents.length)
-        ] - this.state.AccountMoney
-      );
-    }
-
-    console.log(this.state.randomEvents[0].text);
     const tempItems = this.state.items;
 
     const cities = [
@@ -178,6 +167,7 @@ class App extends React.Component {
       "Gdynia",
       "Poznan",
     ];
+
     const randomCities = cities[Math.floor(Math.random() * cities.length)];
 
     tempItems.map((item) => {
@@ -185,27 +175,24 @@ class App extends React.Component {
       return item;
     });
 
-    this.setState({
-      items: this.state.items,
-      myCity: [...randomCities],
-      SumAcctualItems: this.state.items
+    const randomEve = this.state.randomEvents[
+      Math.floor(Math.random() * this.state.randomEvents.length)
+    ];
 
-        .map((r) => {
-          return r.price * r.quantity;
-        })
-        .reduce((a, b) => {
-          return a + b;
-        }),
-    });
-  };
+    if (
+      (Math.floor(Math.random() * 50) === 6 ||
+        Math.floor(Math.random() * 50) === 7) &&
+      this.state.AccountMoney >= 400
+    ) {
+      alert(randomEve.text + " minus -" + randomEve.val.toFixed(0) + "$");
+      this.setState({
+        AccountMoney: Number(
+          (this.state.AccountMoney - randomEve.val).toFixed(0),
+          
+          
+        ),
+        SumAcctualItems: this.state.items
 
-  sellAllItems = () => {
-    this.setState({
-      items: [...this.state.items],
-
-      AccountMoney:
-        this.state.AccountMoney +
-        this.state.items
           .map((r) => {
             return r.price * r.quantity;
           })
@@ -213,11 +200,44 @@ class App extends React.Component {
             return a + b;
           }),
 
-      quantity: this.state.items.map((el) => {
+      });
+    } else {
+      this.setState({
+        items: this.state.items,
+        myCity: [...randomCities],
+        SumAcctualItems: this.state.items
+
+          .map((r) => {
+            return r.price * r.quantity;
+          })
+          .reduce((a, b) => {
+            return a + b;
+          }),
+      });
+    }
+  };
+
+  sellAllItems = (price, name) => {
+    const temp = this.state.items;
+    temp.map((el) => {
+      if (el.name === temp.name) {
+        if (el.quantity !== 0) {
+          el.quantity = el.quantity - el.quantity.length;
+        }
+      }
+      return el
+
+    });
+    console.log(temp);
+    this.setState({
+      items: [...temp],
+
+      AccountMoney: this.state.AccountMoney + this.state.SumAcctualItems,
+
+        SumAcctualItems:  0,
+      quantity: temp.map((el) => {
         return (el.quantity = 0);
       }),
-
-      SumAcctualItems: 0,
     });
   };
 
@@ -249,92 +269,102 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={styles.wrapper}>
-        <h1 className={styles.header__doss}>Biznes Dos Game</h1>
-        <div className={styles.wrapper__wrap}>
-          <span>
-            <h2>
-              Saldo Konta:{" "}
-              <span className={styles.colorTxt}>{this.state.AccountMoney}</span>
-              $
-            </h2>
-          </span>
-          <span>
-            {" "}
-            <h2>
-              Suma twoich zakupionych towarow:{" "}
-              <span className={styles.colorTxt}>
-                {this.state.SumAcctualItems}
-              </span>
-              $
-            </h2>
-          </span>
-        </div>
-        <Items
-          items={this.state.items}
-          changeAccountMoney={this.changeAccountMoney}
-          sellItems={this.sellItems}
-          sellAll={this.sellAll}
-        />
-        <div className={styles.wrapper__buttons}>
-          <span>
-            <h2>
+      <div>
+        <div className={styles.wrapper}>
+          <h1 className={styles.header__doss}>Biznes DOSBox Game !!!</h1>
+          <div className={styles.wrapper__wrap}>
+            <span>
+              <h2>
+                Saldo Konta:{" "}
+                <span className={styles.colorTxt}>
+                  {this.state.AccountMoney}
+                </span>
+                $
+              </h2>
+            </span>
+            <span>
               {" "}
-              Aktualnie jesteś w{" "}
-              <span className={styles.colorTxt}>{this.state.myCity}</span>
-            </h2>
-            <button className={styles.btn} onClick={() => this.changeCity()}>
-              Randomowe Miasto{" "}
-            </button>{" "}
-            <div>
-              {" "}
-              <button
-                className={styles.btn}
-                onClick={() =>
-                  this.sellAllItems(
-                    this.state.items.price,
-                    this.state.items.name
-                  )
-                }
-              >
-                Sprzedaj wszystko
-              </button>
+              <h2>
+                Suma twoich zakupionych towarow:{" "}
+                <span className={styles.colorTxt}>
+                  {this.state.SumAcctualItems}
+                </span>
+                $
+              </h2>
+            </span>
+          </div>
+          <Items
+            items={this.state.items}
+            changeAccountMoney={this.changeAccountMoney}
+            sellItems={this.sellItems}
+          />
+          <div className={styles.wrapper__buttons}>
+            <span>
+              <h2>
+                {" "}
+                Aktualnie jesteś w{" "}
+                <span className={styles.colorTxt}>{this.state.myCity}</span>
+              </h2>
+              <button className={styles.btn} onClick={() => this.changeCity()}>
+                Randomowe Miasto{" "}
+              </button>{" "}
+              <div>
+                {" "}
+                <button
+                  className={styles.btn}
+                  onClick={() =>
+                    this.sellAllItems(
+                      this.state.items.price,
+                      this.state.items.name
+                    )
+                  }
+                >
+                  Sprzedaj wszystko
+                </button>
+              </div>
+            </span>
+
+            <div className={styles.wrapper__}>
+              <h2>
+                Stan twojego dlugu:{" "}
+                <span className={styles.colorTxt}>
+                  {this.state.DebetAccount}
+                </span>{" "}
+                $
+              </h2>
+              <h2>
+                Splac:{" "}
+                <span>
+                  <button
+                    className={styles.btn}
+                    onClick={(e) => this.DebetAccount20()}
+                  >
+                    20%
+                  </button>
+                  <button
+                    className={styles.btn}
+                    onClick={(e) => this.DebetAccount50()}
+                  >
+                    50%
+                  </button>
+                  <button
+                    className={styles.btn}
+                    onClick={(e) => this.DebetAccount80()}
+                  >
+                    80%
+                  </button>
+                </span>
+              </h2>
+
+              <h2>twojego stanu konta</h2>
             </div>
-          </span>
-
-          <div className={styles.wrapper__}>
-            <h2>
-              Stan twojego dlugu:{" "}
-              <span className={styles.colorTxt}>{this.state.DebetAccount}</span>{" "}
-              $
-            </h2>
-            <h2>
-              Splac:{" "}
-              <span>
-                <button
-                  className={styles.btn}
-                  onClick={(e) => this.DebetAccount20()}
-                >
-                  20%
-                </button>
-                <button
-                  className={styles.btn}
-                  onClick={(e) => this.DebetAccount50()}
-                >
-                  50%
-                </button>
-                <button
-                  className={styles.btn}
-                  onClick={(e) => this.DebetAccount80()}
-                >
-                  80%
-                </button>
-              </span>
-            </h2>
-
-            <h2>twojego stanu konta</h2>
           </div>
         </div>
+        <footer className={styles.footer}>
+            <div>
+              <p>Kontak: bazyluk@protonmail.com</p>
+            </div>
+          </footer>
       </div>
     );
   }
