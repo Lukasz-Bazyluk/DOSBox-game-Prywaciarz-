@@ -319,7 +319,7 @@ class App extends React.Component {
                     )
                   }
                 >
-                  Sprzedaj wszystko
+                  Sprzedaj Wszystko
                 </button>
               </div>
             </span>
@@ -358,13 +358,15 @@ class App extends React.Component {
 
               <h2>twojego stanu konta</h2>
             </div>
+            
           </div>
-        </div>
-        <footer className={styles.footer}>
+          <footer className={styles.footer}>
             <div>
               <p>Kontak: bazyluk@protonmail.com</p>
             </div>
           </footer>
+        </div>
+        
       </div>
     );
   }
