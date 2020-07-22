@@ -27,8 +27,8 @@ body {
 }
 
 .wrapper {
-  width: 1200px;
-  margin: 0 auto;
+  // width: 1200px;
+  // margin: 0 auto;
 }
 
 .header__doss {
@@ -52,6 +52,7 @@ body {
     display: flex;
     align-content: center;
     justify-content: space-evenly;
+    
 }
 
 
@@ -160,7 +161,32 @@ body {
      margin: 0 auto;
      margin: 0 auto;
      color: yellow;
-     padding: 40px;
+     padding: 20px;
      font-size: 30px;
    }
+}
+
+.cities {
+  width: 290px;
+}
+@media (max-width: 860px){
+  .wrapper__buttons{
+    display: inline-block;
+    
+  }
+  .wrapper__wrap{
+    margin: 0 auto;
+    display: table;
+  }
+
+  .footer{
+    margin: 5px;
+    letter-spacing: 3px;
+    
+    p{
+      padding: 15px;
+    }
+  }
+  
+  
 }

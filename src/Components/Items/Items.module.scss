@@ -1,6 +1,6 @@
 .wrapper {
 
-  width: 737px;
+  width: 60vw;
   margin: 0 auto;
 
 }
@@ -12,8 +12,9 @@
 
   display: flex;
   padding-left: 5px;
-
+  
   >div {
+    // flex: auto;
     flex: 1;
   }
 
@@ -78,4 +79,29 @@
 
 .quntity {
   margin-left: 5px;
+}
+
+@media (max-width: 860px){
+  .wrapper{
+    width: 90vw;
+  }
+  .wrapper__container{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+  }
+
+  h2{
+    
+  }
+  .btn:before, .btn:after{
+    content: "";
+  }
+
+  .btn {
+
+  }
+  .wrapper__container{
+    margin: 5px;
+  }
 }

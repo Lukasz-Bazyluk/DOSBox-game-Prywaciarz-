@@ -100,27 +100,31 @@ class App extends React.Component {
     const temp = this.state.items;
     temp.map((el) => {
       if (el.name === item) {
-        el.quantity = el.quantity + 1;
+       
+        if (this.state.AccountMoney - price > 0) {
+          el.quantity = el.quantity + 1;
+          this.setState({
+            
+            items: [...temp],
+            AccountMoney: this.state.AccountMoney - price,
+            SumAcctualItems: temp
+              .map((r) => {
+                return r.price * r.quantity;
+              })
+              .reduce((a, b) => {
+                return a + b;
+              }),
+          });
+        }else {
+          alert("Brakuje Ci pieniedzy :(, wez się do roboty :)!");
+          
+        }
       }
 
       return el;
     });
 
-    if (this.state.AccountMoney - price > 0) {
-      this.setState({
-        AccountMoney: this.state.AccountMoney - price,
-        items: [...temp],
-        SumAcctualItems: temp
-          .map((r) => {
-            return r.price * r.quantity;
-          })
-          .reduce((a, b) => {
-            return a + b;
-          }),
-      });
-    } else {
-      alert("Brakuje Ci pieniedzy :(, wez się do roboty :)!");
-    }
+   
   };
 
   sellItems = (price, name) => {
@@ -129,30 +133,38 @@ class App extends React.Component {
       if (el.name === name) {
         if (el.quantity !== 0) {
           el.quantity = el.quantity - 1;
+          this.setState({
+            items: [...temp],
+    
+            AccountMoney: this.state.AccountMoney + price,
+    
+            quantity: temp,
+    
+            SumAcctualItems: temp
+              .map((r) => {
+                return r.price * r.quantity;
+              })
+              .reduce((a, b) => {
+                return a + b;
+              }),
+          });
         } else {
           alert("nie sprzedasz wiecej niz masz !!!");
+          this.setState({
+            quantity: temp.quantity
+          })
+          
         }
       }
 
       return el;
     });
-
-    this.setState({
-      items: [...temp],
-
-      AccountMoney: this.state.AccountMoney + price,
-
-      quantity: temp,
-
-      SumAcctualItems: temp
-        .map((r) => {
-          return r.price * r.quantity;
-        })
-        .reduce((a, b) => {
-          return a + b;
-        }),
-    });
+    
+      
+    
   };
+
+  
 
   changeCity = (e) => {
     const tempItems = this.state.items;
@@ -180,26 +192,23 @@ class App extends React.Component {
     ];
 
     if (
-      (Math.floor(Math.random() * 50) === 6 ||
-        Math.floor(Math.random() * 50) === 7) &&
+      (Math.floor(Math.random() * 30) === 6 ||
+        Math.floor(Math.random() * 30) === 7) &&
       this.state.AccountMoney >= 400
     ) {
       alert(randomEve.text + " minus -" + randomEve.val.toFixed(0) + "$");
       this.setState({
         AccountMoney: Number(
-          (this.state.AccountMoney - randomEve.val).toFixed(0),
-          
-          
+          (this.state.AccountMoney - randomEve.val).toFixed(0)
         ),
-        SumAcctualItems: this.state.items
 
+        SumAcctualItems: this.state.items
           .map((r) => {
             return r.price * r.quantity;
           })
           .reduce((a, b) => {
             return a + b;
           }),
-
       });
     } else {
       this.setState({
@@ -225,16 +234,14 @@ class App extends React.Component {
           el.quantity = el.quantity - el.quantity.length;
         }
       }
-      return el
-
+      return el;
     });
-    console.log(temp);
     this.setState({
       items: [...temp],
 
       AccountMoney: this.state.AccountMoney + this.state.SumAcctualItems,
 
-        SumAcctualItems:  0,
+      SumAcctualItems: 0,
       quantity: temp.map((el) => {
         return (el.quantity = 0);
       }),
@@ -271,7 +278,7 @@ class App extends React.Component {
     return (
       <div>
         <div className={styles.wrapper}>
-          <h1 className={styles.header__doss}>Biznes DOSBox Game !!!</h1>
+          <h1 className={styles.header__doss}>Biznes DOSBox Game Remake</h1>
           <div className={styles.wrapper__wrap}>
             <span>
               <h2>
@@ -300,7 +307,7 @@ class App extends React.Component {
           />
           <div className={styles.wrapper__buttons}>
             <span>
-              <h2>
+              <h2 className={styles.cities}>
                 {" "}
                 Aktualnie jesteś w{" "}
                 <span className={styles.colorTxt}>{this.state.myCity}</span>
@@ -358,15 +365,14 @@ class App extends React.Component {
 
               <h2>twojego stanu konta</h2>
             </div>
-            
           </div>
           <footer className={styles.footer}>
             <div>
-              <p>Kontak: bazyluk@protonmail.com</p>
+              <p>Kontakt:</p>
+              <p> bazyluk@protonmail.com</p>
             </div>
           </footer>
         </div>
-        
       </div>
     );
   }
